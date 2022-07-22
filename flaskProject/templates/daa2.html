@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .xingshi{
+            color: red;
+            font-size: 30px;
+            text-align: center;
+            border: 1px solid red;
+        }
+        .biankuang{
+            border: 1px solid red;
+        }
+        .container{
+            height: 980px;
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<div class="container">
+<div>
+<h1 class="xingshi" style="background-color: beige;height: 100px;padding-top: 50px">
+    第二题答案
+</h1>
+<div >
+    <div  style="margin-top:50px ">在MySQL 5.5.5及以上版本中，MySQL的默认存储引擎是InnoDB。该存储引擎使用的是行级锁，在某种情况下会产生死锁问题，所以InnoDB存储引擎采用了一种叫作等待图（wait-for graph）的方法来自动检测死锁，如果发现死锁，就会自动回滚一个事务。 接下来，我们看一个MySQL中的死锁案例。</div>
+    <div  > <h3>第一步：打开终端A，登录MySQL，将事务隔离级别设置为可重复读，开启事务后为account数据表中id为1的数据添加排他锁，如下所示。</h3></div>
+    <div >mysql> set session transaction isolation level repeatable read;</div>
+    <div>Query OK, 0 rows affected (0.00 sec)</div>
+    <div>mysql> start transaction;</div>
+    <div>Query OK, 0 rows affected (0.00 sec)</div>
+    <div>mysql> select * from account where id =1 for update;</div>
+
+<div>
+    <img src="/static/微信图片_20220714145511.png" style="height: 250px;width:300px">
+</div>
+    <div><h3 style="margin-top:50px ">第二步：打开终端B，登录MySQL，将事务隔离级别设置为可重复读，开启事务后为account数据表中id为2的数据添加排他锁，如下所示。</h3></div>
+<div>mysql> set session transaction isolation level repeatable read;</div>
+    <div>Query OK, 0 rows affected (0.00 sec)</div>
+    <div>mysql> start transaction;</div>
+    <div>Query OK, 0 rows affected (0.00 sec)</div>
+    <div>mysql> select * from account where id =2 for update;</div>
+<div>
+ <img src="/static/微信图片_20220714150552.png" style="height: 250px;width:300px">
+</div>
+
+    <div><h3 style="margin-top:50px ">第三步：在终端A为account数据表中id为2的数据添加排他锁，如下所示</h3></div>
+    <div class="biankuang">mysql> select * from account where id =2 for update;</div>
+<div>此时，线程会一直卡住，因为在等待终端B中id为2的数据释放排他锁。</div>
+</div>
+    <div><h3>第四步：在终端B中为account数据表中id为1的数据添加排他锁，如下所示。</h3>
+<div class="biankuang" >
+    <div>mysql> select * from account where id =1 for update;</div>
+   <div> ERROR 1213 (40001): Deadlock found when trying to get lock; try restarting transaction</div>
+此时发生了死锁。通过如下命令可以查看死锁的日志信息。
+</div>
+    <div class="biankuang">show engine innodb status\G</div>
+    <div>通过命令行查看LATEST DETECTED DEADLOCK选项相关的信息，可以发现死锁的相关信息，或者通过配置innodb_print_all_deadlocks（MySQL 5.6.2版本开始提供）参数为ON，将死锁相关信息打印到MySQL错误日志中。</div>
+    <h3>在MySQL中，通常通过以下几种方式来避免死锁。</h3>
+        <div>1.尽量让数据表中的数据检索都通过索引来完成，避免无效索引导致行锁升级为表锁。</div>
+<div>2.合理设计索引，尽量缩小锁的范围。</div>
+<div>3.尽量减少查询条件的范围，尽量避免间隙锁或缩小间隙锁的范围。</div>
+<div>4.尽量控制事务的大小，减少一次事务锁定的资源数量，缩短锁定资源的时间。</div>
+<div>5.如果一条SQL语句涉及事务加锁操作，则尽量将其放在整个事务的最后执行。</div>
+<div>6.尽可能使用低级别的事务隔离机制。</div>
+</div>
+    <div style="text-align: center">
+    <a href="get_news.html">
+    <input type="button" value="上一题"></a>
+    <a href="index.html"> <input type="button" value="首页"></a>
+    </div>
+</div>
+    </div>
+</body>
+</html>

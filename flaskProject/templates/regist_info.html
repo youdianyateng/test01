@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c2{
+            color: crimson;
+        }
+    </style>
+</head>
+<body>
+<h1 class="c2">用户注册</h1>
+<form method="POST" action="/regist/info">
+    <div>
+        用户名：<input type="text" name="user">
+    </div>
+    <div>
+        密码 ：<input type="password"name="pwd">
+    </div>
+    <div>
+        <input type="radio"name="gender"value="1">男
+        <input type="radio"name="gender"value="2">女
+    </div>
+    <div>
+        爱好：<input type="checkbox" name="hobby"value="11">打游戏
+             <input type="checkbox" name="hobby"value="22">学习
+    </div>
+    <div>
+        所在地方：
+        <select  name="city">
+            <option value="beijing">北京</option>
+            <option value="shanghai">上海</option>
+            <option value="shenzheng">深证</option>
+        </select>
+    </div>
+    <div>
+        个人性格:
+        <textarea name="more">
+        </textarea>
+    </div>
+   <div>
+
+       <input type="submit" value="提交">
+   </div>
+</form>
+</body>
+</html>
