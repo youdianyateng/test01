@@ -11,3 +11,4 @@ def get_news ():
 @app.route("/daan2/news")
 def daan2_news ():
     return render_template("daa2.html")
+#11111111111111111111111111111111111111111111111111111111111111
